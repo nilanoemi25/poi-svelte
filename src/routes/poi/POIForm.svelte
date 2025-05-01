@@ -1,0 +1,92 @@
+
+<script lang="ts">
+    import { loggedInUser } from "$lib/runes.svelte";
+    import { poiService } from "$lib/services/poi-service";
+   import Coordinates from "$lib/ui/Coordinates.svelte";
+   import type { Category, POI } from "$lib/types/poi-types";
+
+    
+    let { categoryList = [] } = $props();
+
+    let selectedCategory= $state("Castle");
+    let POIname = $state("");
+    let POIdescription = $state("");
+    let POIlatitude = $state(52.160858);
+    let POIlongitude =  $state(-7.15242);
+    let message = $state("Add POI")
+
+    async function addPOI() {
+      if (selectedCategory && POIname && POIlatitude && POIlongitude) { 
+      const category = categoryList.find((category) => category._id === selectedCategory); 
+      if (category) {
+        const poi: POI = {
+          name: POIname,
+          description: POIdescription,
+         // category: selectedCategory,
+          latitude: POIlatitude,
+          longitude: POIlongitude,
+         // user: loggedInUser._id,
+          categoryid: category._id,
+        };
+        
+        const success = await poiService.createPoi(poi, loggedInUser.token);
+        if (!success) {
+          message = "POI not added - some error occurred";
+          return;
+        }
+        message = `Thanks! You added ${POIname} to ${category}`;
+      }
+    } else {
+      message = "Please select category, poiName, latitude and longitude";
+    }
+  }
+    
+  </script>
+
+  <div class="field">
+    <label class="label" for="amount">Category List:</label>
+    <div class="select">
+      <select bind:value={selectedCategory}>
+        {#each categoryList as category}
+          <option value={category._id}>{category.name}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <div class="field">
+      <label class="label" for="POI">POI Name:</label>
+      <input bind:value={POIname} class="input" id="POIname" name="POIname" type="text" />
+    </div>
+    <div class="field">
+        <label class="label" for="POI">POI Description:</label>
+        <input bind:value={POIdescription} class="input" id="description" name="description" type="text" />
+    </div>
+    <!--
+    <div class="field">
+      <label class="label" for="amount">Select Category:</label>
+      <div class="select">
+        <select>
+          <option>Castles</option>
+          <option>Rivers</option>
+          <option>Companies</option>
+        </select>
+      </div>
+    </div>-->
+
+
+    <Coordinates bind:POIlatitude bind:POIlongitude />
+    
+    <div class="field">
+      <div class="control">
+        <button onclick={() => addPOI()} class="button">Add POI</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="box mt-4">
+    <div class="content has-text-centered">
+      {message}
+    </div>
+  </div>
