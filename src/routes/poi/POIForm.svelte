@@ -4,9 +4,9 @@
     import { poiService } from "$lib/services/poi-service";
    import Coordinates from "$lib/ui/Coordinates.svelte";
    import type { Category, POI } from "$lib/types/poi-types";
+	import Card from "$lib/ui/Card.svelte";
 
-    
-    let { categoryList = [] } = $props();
+    let { poiList = [] } = $props();
 
     let selectedCategory= $state("Castle");
     let POIname = $state("");
@@ -15,44 +15,62 @@
     let POIlongitude =  $state(-7.15242);
     let message = $state("Add POI")
 
-    async function addPOI() {
-      if (selectedCategory && POIname && POIlatitude && POIlongitude) { 
-      const category = categoryList.find((category) => category._id === selectedCategory); 
-      if (category) {
-        const poi: POI = {
-          name: POIname,
-          description: POIdescription,
-         // category: selectedCategory,
-          latitude: POIlatitude,
-          longitude: POIlongitude,
-         // user: loggedInUser._id,
-          categoryid: category._id,
-        };
+  //   async function addPOI() {
+  //     if (selectedCategory && POIname && POIlatitude && POIlongitude) { 
+  //    // const category = categoryList.find((category) => category._id === selectedCategory); 
+  //   //  if (category) {
+  //    //   const poi: POI = {
+  //         name: POIname,
+  //         description: POIdescription,
+  //        // category: selectedCategory,
+  //         latitude: POIlatitude,
+  //         longitude: POIlongitude,
+  //        // user: loggedInUser._id,
+  //         categoryid: category._id,
+  //       };
         
-        const success = await poiService.createPoi(poi, loggedInUser.token);
-        if (!success) {
-          message = "POI not added - some error occurred";
-          return;
-        }
-        message = `Thanks! You added ${POIname} to ${category}`;
-      }
-    } else {
-      message = "Please select category, poiName, latitude and longitude";
-    }
-  }
-    
+  //       const success = await poiService.createPoi(poi, loggedInUser.token);
+  //       if (!success) {
+  //         message = "POI not added - some error occurred";
+  //         return;
+  //       }
+  //       message = `Thanks! You added ${POIname} to ${category}`;
+  //     }
+  //   } else {
+  //     message = "Please select category, poiName, latitude and longitude";
+  //   }
+  // }
+
+  
+
   </script>
 
+
+
+  <Card>
+    <div class="field">
+      <label class="label" for="amount"> Existing POI List:</label>
+        <ul>
+            {#each poiList as poi}
+            <li><a href="/poi"> {poi.name} and the category is {poi.categoryid} </a></li>
+            {/each}
+        </ul>
+    </div>
+  </Card>
+
+  <Card>
   <div class="field">
     <label class="label" for="amount">Category List:</label>
     <div class="select">
       <select bind:value={selectedCategory}>
-        {#each categoryList as category}
+     <!---   {#each categoryList as category}
           <option value={category._id}>{category.name}</option>
-        {/each}
+        {/each} --> 
       </select>
     </div>
   </div>
+
+
 
   <div>
     <div class="field">
@@ -63,24 +81,13 @@
         <label class="label" for="POI">POI Description:</label>
         <input bind:value={POIdescription} class="input" id="description" name="description" type="text" />
     </div>
-    <!--
-    <div class="field">
-      <label class="label" for="amount">Select Category:</label>
-      <div class="select">
-        <select>
-          <option>Castles</option>
-          <option>Rivers</option>
-          <option>Companies</option>
-        </select>
-      </div>
-    </div>-->
 
 
     <Coordinates bind:POIlatitude bind:POIlongitude />
     
     <div class="field">
       <div class="control">
-        <button onclick={() => addPOI()} class="button">Add POI</button>
+       <!-- <button onclick={() => addPOI()} class="button">Add POI</button> --> 
       </div>
     </div>
   </div>
@@ -90,3 +97,4 @@
       {message}
     </div>
   </div>
+  </Card>

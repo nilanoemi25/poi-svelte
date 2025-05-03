@@ -9,4 +9,3 @@ export function load({ params }) {
 		cats
 	};
 }
-

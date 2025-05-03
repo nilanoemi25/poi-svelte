@@ -16,18 +16,18 @@ let { pois } = $props();
       {#each pois as poi}
         <tr>
           <td>
-            {poi.POIname}
+            {poi.name}
           </td>
           <td>
-            {poi.Category}
+            {poi.categoryid}
           </td><td>
-            {poi.POIdescription}
+            {poi.description}
           </td>
           <td>
-            {poi.POIlatitude}
+            {poi.latitude}
           </td>
           <td>
-            {poi.POIlongitude}
+            {poi.longitude}
           </td>
         </tr>
       {/each}

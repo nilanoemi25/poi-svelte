@@ -4,17 +4,25 @@
     import Card from "$lib/ui/Card.svelte";
     import { onMount } from "svelte";
     import POIForm from "./POIForm.svelte";
-    import type { Category } from "$lib/types/poi-types";
+    import type { POI} from "$lib/types/poi-types";
    
   
     subTitle.text = "Add a POI";
-    let categoryList: Category[] = [];
+    let poiList: POI[] = [];
+    
+  let poiCat; 
 
   onMount(async () => {
-    categoryList = await poiService.getCategories(loggedInUser.token);
+    poiList = await poiService.getPois(loggedInUser.token)
+    poiCat = poiList.filter((poi) => poi.categoryid === "6813b61b91b85f2a47ad3af6") 
   });
+
+
+  export {poiCat}; 
+
   </script>
+
   
   <Card title="Point of Interest">
-    <POIForm {categoryList} />
+  <POIForm {poiList}  />
   </Card>
