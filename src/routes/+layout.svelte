@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import { loggedInUser } from "$lib/runes.svelte";
 	import { poiService } from "$lib/services/poi-service";
   import Heading from "$lib/ui/Heading.svelte";

@@ -2,6 +2,7 @@
     import "leaflet/dist/leaflet.css";
     import { onMount } from "svelte";
     import type { Control, Map as LeafletMap } from "leaflet";
+    import { currentCategories } from "$lib/runes.svelte";
   
     let { height = 80 } = $props();
     let id = "home-map-id";
@@ -31,19 +32,18 @@
         {
           attribution:
             "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-        }
-      ),
-    OpenStreetMap_France :  L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+        }),
+    OpenStreetMap_France: L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
        {
 	      maxZoom: 20,
 	      attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
      }),
-     OPNVKarte : L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+     OPNVKarte:L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
 	     maxZoom: 18,
 	     attribution: 'Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }) };
  
-
+  //  if categories == Castle then else then  
 
       let defaultLayer = baseLayers[activeLayer];
       imap = leaflet.map(id, {
@@ -68,7 +68,7 @@
     L = leaflet.default;
     imap.flyTo({ lat: lat, lng: lng });
   }
-  
+
   </script>
   
   <div {id} class="box" style="height: {height}vh"></div>

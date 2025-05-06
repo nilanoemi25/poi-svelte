@@ -17,7 +17,7 @@
    // poiCat = poiList.filter((poi) => poi.categoryid === "6813b61b91b85f2a47ad3af6") 
   });
 
-  //export {poiCat}; 
+ // export {poiCat}; 
 
   </script>
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-// let { pois } = $props();
 import { currentPOIs } from "$lib/runes.svelte";
   </script>
   
