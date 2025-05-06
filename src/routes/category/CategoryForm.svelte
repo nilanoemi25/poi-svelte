@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { loggedInUser } from "$lib/runes.svelte";
+	import { currentCategories, loggedInUser } from "$lib/runes.svelte";
 	import { poiService } from "$lib/services/poi-service";
 	import type { Category } from "$lib/types/poi-types";
 
@@ -12,9 +12,7 @@
         const category: Category = {
          name: categoryname,
         };
-        
         const success = await poiService.createCategory(category, loggedInUser.token);
-
         if (!success) {
           message = "POI not added - some error occurred";
           return;
@@ -22,8 +20,9 @@
         else {
         message = `Thanks! You added ${categoryname}`;
        } 
-  
       } 
+
+      
 
   </script>
   <div class="field">

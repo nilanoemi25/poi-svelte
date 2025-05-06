@@ -23,9 +23,13 @@ export const poiService = {
     localStorage.donation = JSON.stringify(loggedInUser);
   },
 
+  
   async login(email: string, password: string): Promise<Session | null> {
     try {
-      const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+      const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
+        email,
+        password
+      });
       if (response.data.success) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
         const session: Session = {
@@ -43,7 +47,7 @@ export const poiService = {
       return null;
     }
   },
-
+  
   async getCategories(token: string): Promise<Category[]> {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -60,6 +64,28 @@ export const poiService = {
     currentCategories.categories = await this.getCategories(loggedInUser.token);
     currentPOIs.pois = await this.getPois(loggedInUser.token);
     }
+  },
+
+  async restoreSession() {
+    const savedLoggedInUser = localStorage.donation;
+    if (savedLoggedInUser) {
+      const session = JSON.parse(savedLoggedInUser);
+      loggedInUser.email = session.email;
+      loggedInUser.name = session.name;
+      loggedInUser.token = session.token;
+      loggedInUser._id = session._id;
+    }
+    await this.refreshCategoryInfo();
+  },
+
+  clearSession() {
+    currentCategories.categories = [];
+    currentPOIs.pois = [];
+    loggedInUser.email = "";
+    loggedInUser.name = "";
+    loggedInUser.token = "";
+    loggedInUser._id = "";
+    localStorage.removeItem("donation");
   },
 
   

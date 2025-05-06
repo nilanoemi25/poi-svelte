@@ -13,13 +13,6 @@
     console.log(`attempting to log in email: ${email} with password: ${password}`);
     let session = await poiService.login(email, password);
     if (session) {
-      loggedInUser.email = email;
-      loggedInUser.name = session.name;
-      loggedInUser.token = session.token;
-      loggedInUser._id = session._id;
-      localStorage.poi = JSON.stringify(loggedInUser);
-      console.log(`Session: ${JSON.stringify(session)}`);
-      console.log(`${loggedInUser.name}`)
       goto("/category");
     } else {
       email = "";
@@ -27,6 +20,8 @@
       message = "Invalid Credentials";
     }
   }
+
+
 </script>
 
 {#if message}

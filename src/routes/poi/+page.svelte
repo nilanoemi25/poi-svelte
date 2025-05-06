@@ -10,15 +10,14 @@
     subTitle.text = "Add a POI";
     let poiList: POI[] = [];
     
-  let poiCat; 
+ // let poiCat; 
 
   onMount(async () => {
     poiList = await poiService.getPois(loggedInUser.token)
-    poiCat = poiList.filter((poi) => poi.categoryid === "6813b61b91b85f2a47ad3af6") 
+   // poiCat = poiList.filter((poi) => poi.categoryid === "6813b61b91b85f2a47ad3af6") 
   });
 
-
-  export {poiCat}; 
+  //export {poiCat}; 
 
   </script>
 

@@ -1,6 +1,6 @@
 
 <script lang="ts">
-    import { loggedInUser } from "$lib/runes.svelte";
+    import { currentPOIs, loggedInUser } from "$lib/runes.svelte";
     import { poiService } from "$lib/services/poi-service";
    import Coordinates from "$lib/ui/Coordinates.svelte";
    import type { Category, POI } from "$lib/types/poi-types";
@@ -40,8 +40,6 @@
   //     message = "Please select category, poiName, latitude and longitude";
   //   }
   // }
-
-  
 
   </script>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-let { pois } = $props();
+// let { pois } = $props();
+import { currentPOIs } from "$lib/runes.svelte";
   </script>
   
   <table class="table is-fullwidth">
@@ -13,7 +14,7 @@ let { pois } = $props();
       </tr>
     </thead>
     <tbody>
-      {#each pois as poi}
+      {#each currentPOIs.pois as poi}
         <tr>
           <td>
             {poi.name}

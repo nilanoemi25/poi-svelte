@@ -2,25 +2,80 @@
     import { subTitle } from "$lib/runes.svelte";
     // @ts-ignore
     import Chart from "svelte-frappe-charts";
-  
+    import { onMount } from "svelte"; 
+    import { currentPOIs, currentCategories } from "$lib/runes.svelte";
+	
+
     subTitle.text = "Charts";
-    const chartData = {
-      labels: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+
+    const poisbyCategory = {
+      labels: ["Castle", "Cities"],
       datasets: [
         {
-          values: [10, 12, 3, 9, 8, 15, 9]
+          values: [0,0]
         }
       ]
     };
+
+    const poisbyLatitude = {
+      labels: [],
+      datasets: [
+        {
+          values: [0,0]
+        }
+      ]
+    };
+
+    // Get all current Ids from  currentCategories
+    let categoryDBids: (string | undefined)[] = []
+    currentCategories.categories.forEach((category) => {
+      if (category._id !== undefined)
+      categoryDBids.push(category._id)}); 
+
+   let categoryDBidswithoutDuplicates = categoryDBids.filter((v, index, category)=>category.indexOf(v) == index);
+   console.log($inspect(categoryDBidswithoutDuplicates)); 
+
+   console.log($inspect(currentPOIs)); 
+
+   // gives me undefined     if(poi.categoryid == categoryDBidswithoutDuplicates[0]){
+    onMount(async () => {
+    currentPOIs.pois.forEach((poi) => {
+      if(poi.categoryid == "681a35a2bdd71ece5b2a51cd"){
+        poisbyCategory.datasets[0].values[0] += 1; 
+      }
+      else if(poi.categoryid == "681a35a2bdd71ece5b2a51cb"){
+        poisbyCategory.datasets[0].values[1] += 1; 
+      }
+    })
+
+  //   poisbyLatitude.labels = [];
+
+  //   currentCategories.categories.forEach((category, i) => {
+  //     poisbyLatitude.labels.push(`${category.name}`);
+  //     poisbyLatitude.datasets[0].values.push(0);
+  
+  //     currentPOIs.pois.forEach((poi) => {
+  //     if(poi.latitude === 52.2593) {
+  //     poisbyLatitude.datasets[0].values[i] += 1; }
+  //     else if (poi.latitude === 51.8999) {
+  //       poisbyLatitude.datasets[0].values[i] += 1; }
+  //    });
+  // });
+
+    })
   </script>
   
   <div class="columns">
     <div class="column box has-text-centered">
-      <h1 class="title is-4">Donations to date</h1>
-      <Chart data={chartData} type="line" />
+      <h1 class="title is-4"> Pois per Category </h1>
+      <Chart data={poisbyCategory} type="bar" />
     </div>
-    <div class="column has-text-centered">
+    <div class="column box has-text-centered">
+      <h1 class="title is-4"> Pois per Latitude </h1>
+      <Chart data={poisbyLatitude} type="bar" />
+    </div>
+    <!-- <div class="column has-text-centered">
       <img alt="Homer" src="/homer4.jpeg" width="300" />
-    </div>
+    </div> -->
   </div>
   
