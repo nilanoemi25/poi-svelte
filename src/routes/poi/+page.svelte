@@ -10,18 +10,15 @@
     subTitle.text = "Add a POI";
     let poiList: POI[] = [];
     
- // let poiCat; 
-
   onMount(async () => {
     poiList = await poiService.getPois(loggedInUser.token)
-   // poiCat = poiList.filter((poi) => poi.categoryid === "6813b61b91b85f2a47ad3af6") 
+
   });
 
- // export {poiCat}; 
-
+    //ignore typescript error for poiList
   </script>
 
-  
+
   <Card title="Point of Interest">
   <POIForm {poiList}  />
   </Card>

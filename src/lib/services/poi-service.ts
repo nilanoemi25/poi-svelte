@@ -117,7 +117,8 @@ export const poiService = {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       const response = await axios.post(this.baseUrl + "/api/categories/" + category._id + "/pois", poi);
       await this.refreshCategoryInfo();
-      return response.status == 200;
+    //  return response.status == 200;
+    return response.data;
     } catch (error) {
       console.log(error);
       return false;
