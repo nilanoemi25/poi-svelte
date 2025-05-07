@@ -24,7 +24,7 @@ export interface Session {
     latitude: number;
     longitude:number;
     categoryid?: Category | string; 
-   v?: string; 
+    v?: string; 
   //  user: User | string; 
  // category: Category | string; 
   }
