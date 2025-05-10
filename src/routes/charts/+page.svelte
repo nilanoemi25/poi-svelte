@@ -21,15 +21,15 @@
     PoiNamesLength.push({name: p.name, len: p.name.length})
     });
     
-  //   categoryNames.forEach((catName) => {
-  //   NamesLength.push({ name: catName.name, len: catName.name.length})
-  //   }
-  //  ); 
+    // categoryNames.forEach((catName) => {
+    // NamesLength.push({ name: catName.name, len: catName.name.length})
+    //  }
+    // ); 
 
     console.log(categoryNames);
     console.log(categoryIDs);
    // console.log(NamesLength); 
-   console.log(PoiNamesLength);
+    console.log(PoiNamesLength);
 
     const chartData1 = {
       labels: [ categoryNames[0].name,categoryNames[1].name, categoryNames[2].name],
@@ -54,11 +54,12 @@
       labels: [ PoiNamesLength[0].name, PoiNamesLength[1].name,PoiNamesLength[2].name,PoiNamesLength[3].name,PoiNamesLength[4].name, PoiNamesLength[5].name,],
       datasets: [
         {
-          values: [0,0,0,0,0.0]
+          values: [0,0,0,0,0]
         }
       ]
     };
 
+ 
     onMount(async () => {
      currentPOIs.pois.forEach((poi) => {
       if (poi.categoryid == categoryIDs[0].id) {
@@ -113,11 +114,12 @@
       <h1 class="title is-4">Pois per Category </h1>
       <Chart data={chartData1} type="bar" />
     </div>
-    <p> HELLO </p>
+    <p>--</p>
     <div class="column box has-text-centered">
       <h1 class="title is-4">Latitude Variations</h1>
       <Chart data={chartData2} type="pie" />
     </div>
+    <p>--</p>
     <div class="column box has-text-centered">
       <h1 class="title is-4"> Poi Name's Length</h1>
       <Chart data={chartData3} type="line" />

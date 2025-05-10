@@ -3,7 +3,8 @@ import type { Session, User, Category, POI } from "$lib/types/poi-types";
 import { currentCategories, currentPOIs, loggedInUser } from "$lib/runes.svelte";
 
 export const poiService = {
-  baseUrl: "http://localhost:4000",
+ // baseUrl: "http://localhost:4000",
+ baseUrl: "https://knotty-near-rest.glitch.me", 
 
   async signup(user: User): Promise<boolean> {
     try {
@@ -88,7 +89,7 @@ export const poiService = {
     localStorage.removeItem("donation");
   },
 
-  
+  //gets all POIs
   async getPois(token: string): Promise<POI[]> {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -99,6 +100,18 @@ export const poiService = {
       return [];
     }
   },
+
+  async getPoisById(token: string): Promise<POI[]> {
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.get(this.baseUrl + "/api/pois/{id}");
+      return response.data;
+    } catch (error) {
+    console.log(error)
+      return [];
+    }
+  },
+
 
   async createCategory(category:Category,token: string) {
     try {
@@ -111,7 +124,7 @@ export const poiService = {
     return false;
     }
   },
-//change return response.data? instead of 200
+
   async createPoi(poi: POI, category:Category, token: string) {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;

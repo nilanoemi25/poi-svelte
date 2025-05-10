@@ -16,6 +16,7 @@ export interface Session {
   export interface Category {
     name: string;
     _id?: string; 
+    //  user: User | string; 
   }
 
   export interface POI {

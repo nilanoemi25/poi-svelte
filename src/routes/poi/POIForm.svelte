@@ -48,7 +48,7 @@
       <label class="label" for="amount"> Existing POI List:</label>
         <ul>
             {#each currentPOIs.pois as poi}
-            <li><a href="/poi"> {poi.name} and the category is {poi.categoryid} </a></li>
+            <li><a href="/poi/[poi.id]"> {poi.name} and the category is {poi.categoryid} </a></li>
             {/each}
         </ul>
     </div>
