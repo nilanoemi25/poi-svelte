@@ -10,25 +10,26 @@
     let password = $state("");
     let message = $state("");
   
-    async function signup() {
-      const success = false;
-      if (success) {
-        goto("/category");
-      } else {
-        message = "Error Trying to sign up";
-      }
-    }
+    // async function signup() {
+    //   const success = false;
+    //   if (success) {
+    //     goto("/category");
+    //   } else {
+    //     message = "Error Trying to sign up";
+    //   }
+    // }
   </script>
   
-  <div class="box">
+ <div class="box">
+  <form method="POST" action="?/signup">
     {#if message}
-    <Message {message} />
-  {/if}
+      <Message {message} />
+    {/if}
     <UserDetails bind:firstName bind:lastName />
     <UserCredentials bind:email bind:password />
-    <button onclick={() => signup()} class="button">Sign Up</button>
+    <button class="button">Sign Up</button>
     <p class="has-text-centered">
       Already have an account? <a href="/login" data-cy="login-redirect">Login Here</a>
     </p>
-  </div>
-  
+  </form>
+</div>
