@@ -6,13 +6,16 @@
   
     let { height = 80 } = $props();
     let id = "home-map-id";
+    let id1 = "map1" ;
     let location = { lat: 53.2734, lng: -7.7783203 };
     let zoom = 8;
     let minZoom = 7;
     let activeLayer = "Terrain";
     
     let imap: LeafletMap;
+    let imap1: LeafletMap;
     let control: Control.Layers;
+    let control1: Control.Layers; 
     let overlays: Control.LayersObject = {};
     let baseLayers: any;
     let L: any;
@@ -53,7 +56,19 @@
         layers: [defaultLayer]
       });
       control = leaflet.control.layers(baseLayers, overlays).addTo(imap);
-    });
+
+      imap1 = leaflet.map(id1, {
+      center: [location.lat + 0.5, location.lng + 0.5],
+      zoom: zoom,
+      minZoom: minZoom,
+      layers: [defaultLayer]
+      });
+      control1 = leaflet.control.layers(baseLayers, overlays).addTo(imap1);
+
+      if (!imap) {
+     imap = L.map('map1').setView([51.505, -0.09], 13);
+    }
+  });
 
     export async function addMarker(lat: number, lng: number, popupText: string) {
     const leaflet = await import("leaflet");

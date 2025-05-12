@@ -8,6 +8,8 @@
 
   subTitle.text = "POIs Geo Data";
   let map: LeafletMap;
+  let map1: LeafletMap;
+
 
   onMount(async () => {
     const pois = await poiService.getPois(loggedInUser.token);
@@ -17,8 +19,18 @@
     const lastPOI = pois[pois.length - 1];
     if (lastPOI) map.moveTo(lastPOI.latitude, lastPOI.longitude);
   });
+
+
 </script>
 
+<div id ="home-map-id">
 <Card title="POI Locations">
-  <LeafletMap height={60} bind:this={map} />
+  <LeafletMap height={50} bind:this={map} />
 </Card>
+</div>
+<!-- 
+<div id="map1">
+<Card title="POI Locations">
+  <LeafletMap height={50} bind:this={map1} />
+</Card>
+</div>  -->

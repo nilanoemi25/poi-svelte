@@ -1,10 +1,10 @@
-
 <script lang="ts">
   import { currentCategories, currentPOIs, loggedInUser } from "$lib/runes.svelte";
   import { poiService } from "$lib/services/poi-service";
   import Coordinates from "$lib/ui/Coordinates.svelte";
   import type { Category, POI } from "$lib/types/poi-types";
 	import Card from "$lib/ui/Card.svelte";
+  import DOMPurify from 'dompurify';
  
     let selectedCategory= $state();
     let POIname = $state("");
@@ -13,6 +13,15 @@
     let POIlongitude =  $state(-7.15242);
     let message = $state("Add POI")
 
+    function sanitizeInput() {
+      if(POIname){
+       POIname = DOMPurify.sanitize(POIname);
+      }
+      if(POIdescription){
+        POIdescription = DOMPurify.sanitize(POIdescription);
+      }
+  }
+
     async function addPOI() {
       if (selectedCategory && POIname && POIlatitude && POIlongitude) { 
       const category = currentCategories.categories.find((category) => category._id === selectedCategory); 
@@ -20,11 +29,9 @@
        const poi: POI = {
           name: POIname,
           description: POIdescription,
-          //category: selectedCategory,
           latitude: POIlatitude,
           longitude: POIlongitude,
-         // user: loggedInUser._id,
-          categoryid: category._id,
+          categoryid: category.name,
         }; 
         
         const success = await poiService.createPoi(poi, category, loggedInUser.token);
@@ -32,7 +39,7 @@
           message = "POI not added - some error";
           return;
         }
-        message = `Thanks! You added ${POIname} to ${category}`;
+        message = `Thanks! You added ${POIname} to ${poi.categoryid}`;
       }
     } else {
       message = "Please select category, poiName, latitude and longitude";
@@ -42,13 +49,12 @@
   </script>
 
 
-
   <Card>
     <div class="field">
       <label class="label" for="amount"> Existing POI List:</label>
         <ul>
             {#each currentPOIs.pois as poi}
-            <li><a href="/poi/[poi.id]"> {poi.name} and the category is {poi.categoryid} </a></li>
+            <li><a href="/poi/[poi.id]"> {poi.name} and the category is {poi.categoryid}</a></li>
             {/each}
         </ul>
     </div>
@@ -69,11 +75,11 @@
   <div>
     <div class="field">
       <label class="label" for="POI">POI Name:</label>
-      <input bind:value={POIname} class="input" id="POIname" name="POIname" type="text" />
+      <input bind:value={POIname} oninput={sanitizeInput} class="input" id="POIname" name="POIname" type="text" />
     </div>
     <div class="field">
         <label class="label" for="POI">POI Description:</label>
-        <input bind:value={POIdescription} class="input" id="description" name="description" type="text" />
+        <input bind:value={POIdescription} oninput={sanitizeInput} class="input" id="description" name="description" type="text" />
     </div>
 
 

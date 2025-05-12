@@ -26,6 +26,7 @@ export interface Session {
     longitude:number;
     categoryid?: Category | string; 
     v?: string; 
-  //  user: User | string; 
+    img?: string; 
+  //  user?: User | string; 
  // category: Category | string; 
   }

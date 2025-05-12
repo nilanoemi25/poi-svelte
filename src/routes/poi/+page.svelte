@@ -5,6 +5,7 @@
     import { onMount } from "svelte";
     import POIForm from "./POIForm.svelte";
     import type { POI} from "$lib/types/poi-types";
+
    
   
     subTitle.text = "Add a POI";

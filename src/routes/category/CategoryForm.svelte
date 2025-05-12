@@ -2,11 +2,11 @@
 	import { currentCategories, loggedInUser } from "$lib/runes.svelte";
 	import { poiService } from "$lib/services/poi-service";
 	import type { Category } from "$lib/types/poi-types";
+  import DOMPurify from 'dompurify';
 
     let { categoryList = [] } = $props();
     let message = $state("");
     let categoryname = $state("");
-  //  let selectedCategory= $state("Castle");
    
     async function addCategory() {
         const category: Category = {
@@ -22,7 +22,9 @@
        } 
       } 
 
-      
+  function sanitizeInput() {
+    categoryname = DOMPurify.sanitize(categoryname);
+  }
 
   </script>
   <div class="field">
@@ -48,7 +50,7 @@
   <div>
     <div class="field">
       <label class="label" for="category">Add new Category:</label>
-      <input bind:value={categoryname} class="input" id="category" name="category" type="text" />
+      <input bind:value={categoryname} oninput={sanitizeInput} class="input" id="category" name="category" type="text" />
     </div>
     
     <div class="field">

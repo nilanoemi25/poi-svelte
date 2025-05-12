@@ -3,8 +3,8 @@ import type { Session, User, Category, POI } from "$lib/types/poi-types";
 import { currentCategories, currentPOIs, loggedInUser } from "$lib/runes.svelte";
 
 export const poiService = {
- // baseUrl: "http://localhost:4000",
- baseUrl: "https://knotty-near-rest.glitch.me", 
+  baseUrl: "http://localhost:4000",
+ //baseUrl: "https://knotty-near-rest.glitch.me", 
 
   async signup(user: User): Promise<boolean> {
     try {
@@ -132,6 +132,15 @@ export const poiService = {
       await this.refreshCategoryInfo();
     //  return response.status == 200;
     return response.data;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  async deleteImage(public_id: string) {
+    try {
+      const response = await axios.post(`${this.baseUrl}/api/deleteImage`, public_id);
+      return response.data.success === true;
     } catch (error) {
       console.log(error);
       return false;
