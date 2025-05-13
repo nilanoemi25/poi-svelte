@@ -10,17 +10,17 @@
   let message = $state("");
 
 
-  // async function login() {
-  //   console.log(`attempting to log in email: ${email} with password: ${password}`);
-  //   let session = await poiService.login(email, password);
-  //   if (session) {
-  //     goto("/category");
-  //   } else {
-  //     email = "";
-  //     password = "";
-  //     message = "Invalid Credentials";
-  //   }
-  // }
+  async function login() {
+    console.log(`attempting to log in email: ${email} with password: ${password}`);
+    let session = await poiService.login(email, password);
+    if (session) {
+      goto("/category");
+    } else {
+      email = "";
+      password = "";
+      message = "Invalid Credentials";
+    }
+  }
 
 
 </script>

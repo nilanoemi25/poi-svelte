@@ -29,7 +29,7 @@ export const poiService = {
           token: response.data.token,
           _id: response.data._id
         };
-       // this.saveSession(session, email);
+        this.saveSession(session, email);
         await this.refreshCategoryInfo();
         return session;
       }

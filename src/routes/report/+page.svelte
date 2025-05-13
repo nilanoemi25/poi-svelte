@@ -9,6 +9,7 @@
   subTitle.text = "POIs to date";
 
   let pois: POI[] = [];
+  
   onMount(async () => {
    pois = await poiService.getPois(loggedInUser.token);
   });
