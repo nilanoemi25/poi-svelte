@@ -9,7 +9,6 @@ export interface Session {
     lastName: string;
     email: string;
     password: string;
-    status?: string;
     _id?: string;
   }
   

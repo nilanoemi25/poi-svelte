@@ -3,8 +3,8 @@ import type { Session, User, Category, POI } from "$lib/types/poi-types";
 import { currentCategories, currentPOIs, loggedInUser } from "$lib/runes.svelte";
 
 export const poiService = {
-  baseUrl: "http://localhost:4000",
- //baseUrl: "https://knotty-near-rest.glitch.me", 
+ // baseUrl: "http://localhost:4000",
+ baseUrl: "https://knotty-near-rest.glitch.me", 
 
   async signup(user: User): Promise<boolean> {
     try {
