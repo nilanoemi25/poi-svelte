@@ -25,10 +25,10 @@
 
 </script>
 
-{#if message}
-  <Message {message} />
-{/if}
-<form method="POST" action="?/login">
-  <UserCredentials />
-  <button class="button is-success is-fullwidth">Log In</button>
-</form>
+<div class="box">
+  {#if message}
+    <Message {message} />
+  {/if}
+  <UserCredentials bind:email bind:password />
+  <button onclick={() => login()} class="button">Log In</button>
+</div>
