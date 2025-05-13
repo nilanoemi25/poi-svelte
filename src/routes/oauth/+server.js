@@ -1,8 +1,8 @@
 import { redirect } from '@sveltejs/kit';
 import { OAuth2Client } from 'google-auth-library';
 
-
-import {SECRET_CLIENT_ID,SECRET_CLIENT_SECRET} from '$env/static/public';
+const SECRET_CLIENT_ID = process.env.SECRET_CLIENT_ID; 
+const SECRET_CLIENT_SECRET = process.env.SECRET_CLIENT_SECRET; 
 
 async function getUserData(access_token) {
 
