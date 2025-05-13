@@ -15,15 +15,6 @@ export const poiService = {
       return false;
     }
   },
-
-  saveSession(session: Session, email: string) {
-    loggedInUser.email = email;
-    loggedInUser.name = session.name;
-    loggedInUser.token = session.token;
-    loggedInUser._id = session._id;
-    localStorage.donation = JSON.stringify(loggedInUser);
-  },
-
   
   async login(email: string, password: string): Promise<Session | null> {
     try {
@@ -38,7 +29,7 @@ export const poiService = {
           token: response.data.token,
           _id: response.data._id
         };
-        this.saveSession(session, email);
+       // this.saveSession(session, email);
         await this.refreshCategoryInfo();
         return session;
       }
@@ -66,6 +57,15 @@ export const poiService = {
     currentPOIs.pois = await this.getPois(loggedInUser.token);
     }
   },
+
+    saveSession(session: Session, email: string) {
+    loggedInUser.email = email;
+    loggedInUser.name = session.name;
+    loggedInUser.token = session.token;
+    loggedInUser._id = session._id;
+    localStorage.donation = JSON.stringify(loggedInUser);
+  },
+
 
   async restoreSession() {
     const savedLoggedInUser = localStorage.donation;
@@ -137,6 +137,7 @@ export const poiService = {
       return false;
     }
   },
+  //not working 
   async deleteImage(public_id: string) {
     try {
       const response = await axios.post(`${this.baseUrl}/api/deleteImage`, public_id);
