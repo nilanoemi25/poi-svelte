@@ -17,6 +17,7 @@
 	 * @type {{ status: any; }}
 	 */
 	let error; 
+
  
 
 	// @ts-ignore
@@ -30,6 +31,7 @@
 
 		widget.close();
 	}
+
 
 	async function deleteImage(publicId) {
   const response = await fetch("/api/deleteImage", {
@@ -55,11 +57,11 @@
 
 <ul class="columns is-multiline">
     {#each currentPOIs.pois as poi}
-        <li class="column is-one-third">
+        <li class="column is-four-fifths">
             <h3>{poi.name}</h3>
 			<div>
 			<div class="container">
-			<CldUploadWidget uploadPreset="Uppreset" options={{ public_id: `${poi.name}-image` }} let:open let:isLoading {onUpload}>
+			<CldUploadWidget uploadPreset="Uppreset" options={{ public_id: `${poi.name}` }} let:open let:isLoading {onUpload}>
 				<button onclick={() => open()} disabled={isLoading} class="button">
 				Add Image
 				</button>
@@ -68,18 +70,31 @@
 		    {/if}
 
 		   {#if info}
+		   {#if info.public_id == poi.name}
 			<p>
-				<img width={info.width} height={info.height} src={info.secure_url} alt="Uploaded image" />
+					<CldImage width={info.width} height={info.height} src="https://res.cloudinary.com/djqxe7bqw/image/upload/v1746962741/{poi.name}.jpg" alt="Uploaded image" overlays={[
+		{
+		text: {
+			color: 'black',
+			fontFamily: 'Source Sans Pro',
+			fontSize: 75,
+			fontWeight: 'bold',
+			text: `${poi.name}`
+		},
+		},
+	]} />
 			</p>
 			<p>{info?.secure_url}</p>
 		   {/if}
+		   {/if}
 			</CldUploadWidget>
 				
-			<div class="container">
+			<!-- <div class="container">
 				<button onclick={() => deleteImage(`${poi.name}-image.jpg`)} class="button">
 					Delete Image not Working
 				</button>
-				</div>
+			</div> -->
+			</div>
 			</div>
         </li>
     {/each}
