@@ -7,7 +7,7 @@
 	import Card from "$lib/ui/Card.svelte";  
     import { currentPOIs } from "$lib/runes.svelte";
 
-	let { poiDetails } = $props();
+//	let { poiDetails } = $props();
   
 	
 
@@ -55,10 +55,24 @@
 
 </script>
 
-<!-- <h1>{@html poiDetails}</h1>  -->
+ {#each currentPOIs.pois as poi}
+        <li class="column is-one-third">
+            <h3>{poi.name}</h3>
+			<div>
+				<div class="container">
+				<CldUploadWidget uploadPreset="Uppreset" options={{ public_id: `${poi.name}-image` }} let:open let:isLoading>
+					<button onclick={() => open()} disabled={isLoading} class="button">
+					Add Image
+					</button>
+				</CldUploadWidget>
+				</div>
+			</div>
+		</li>
+{/each}
 
 
-<ul class="columns is-multiline">
+
+<!-- <ul class="columns is-multiline">
     {#each currentPOIs.pois as poi}
         <li class="column is-one-third">
             <h3>{poi.name}</h3>
@@ -94,7 +108,7 @@
 			</div>
         </li>
     {/each}
-</ul>
+</ul> -->
 
 <!-- <Card>
 	<header class="card-header">
