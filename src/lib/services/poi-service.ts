@@ -51,6 +51,8 @@ export const poiService = {
     }
   },
 
+
+
   async refreshCategoryInfo() {
     if (loggedInUser.token) {
     currentCategories.categories = await this.getCategories(loggedInUser.token);
@@ -137,6 +139,19 @@ export const poiService = {
       return false;
     }
   },
+
+
+  //    async getCategoriesById(poi: POI, token: string) {
+  //   try {
+  //     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  //     const response = await axios.get(this.baseUrl + "/categories/" + poi.categoryid);
+  //     return response.data;
+  //   } catch (error) {
+  //   console.log(error)
+  //     return [];
+  //   }
+  // },
+
   //not working 
   async deleteImage(public_id: string) {
     try {

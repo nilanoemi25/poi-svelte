@@ -6,8 +6,6 @@
     import POIForm from "./POIForm.svelte";
     import type { POI} from "$lib/types/poi-types";
 
-   
-  
     subTitle.text = "Add a POI";
     let poiList: POI[] = [];
     
@@ -23,3 +21,4 @@
   <Card title="Point of Interest">
   <POIForm {poiList}  />
   </Card>
+  

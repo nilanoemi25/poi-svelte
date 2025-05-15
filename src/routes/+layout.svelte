@@ -12,7 +12,7 @@
 </script>
 
 <div class="container">
-  {#if loggedInUser.email}
+  {#if loggedInUser.name}
     <Menu />
     <Heading />
   {/if}

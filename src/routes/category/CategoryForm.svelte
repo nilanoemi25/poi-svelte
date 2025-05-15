@@ -35,17 +35,7 @@
           {/each}
       </ul>
   </div>
-  
-    <!--
-    <div class="select">
-    <select>
-        {#each categoryList as category}
-          <option value={category._id}>{category.name}</option>
-        {/each}
-    </select>
-    </div>
-  </div>
-  -->
+
 
   <div>
     <div class="field">

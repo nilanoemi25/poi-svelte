@@ -25,10 +25,11 @@
 
 </script>
 
-<div class="box">
-  {#if message}
-    <Message {message} />
-  {/if}
+{#if message}
+  <Message {message} />
+{/if}
+
+<form on:submit|preventDefault={login}>
   <UserCredentials bind:email bind:password />
-  <button onclick={() => login()} class="button">Log In</button>
-</div>
+  <button class="button is-success is-fullwidth">Log In</button>
+</form>

@@ -9,7 +9,6 @@
   subTitle.text = "POIs to date";
 
   let pois: POI[] = [];
-  
   onMount(async () => {
    pois = await poiService.getPois(loggedInUser.token);
   });
@@ -17,5 +16,5 @@
 </script>
 
 <Card title="POIs">
-  <POIList {pois} />
+  <POIList />
 </Card>

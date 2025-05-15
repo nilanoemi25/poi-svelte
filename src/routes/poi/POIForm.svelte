@@ -5,6 +5,8 @@
   import type { Category, POI } from "$lib/types/poi-types";
 	import Card from "$lib/ui/Card.svelte";
   import DOMPurify from 'dompurify';
+
+  
  
     let selectedCategory= $state();
     let POIname = $state("");
