@@ -9,7 +9,6 @@
  
     let categoryNames: { name: string; }[] = [];
     let categoryIDs: { id: string | undefined; }[] = [];
-   // let NamesLength: { name: string; len: number; }[] = [];
    let PoiNamesLength: { name: string; len: number; }[] = [];
 
     currentCategories.categories.forEach((c) => {
@@ -21,14 +20,8 @@
     PoiNamesLength.push({name: p.name, len: p.name.length})
     });
     
-    // categoryNames.forEach((catName) => {
-    // NamesLength.push({ name: catName.name, len: catName.name.length})
-    //  }
-    // ); 
-
     console.log(categoryNames);
     console.log(categoryIDs);
-   // console.log(NamesLength); 
     console.log(PoiNamesLength);
 
     const chartData1 = {

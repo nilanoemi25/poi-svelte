@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loggedInUser, subTitle } from "$lib/runes.svelte";
+  import { currentCategories, loggedInUser, subTitle } from "$lib/runes.svelte";
   import { poiService } from "$lib/services/poi-service";
   import type { POI } from "$lib/types/poi-types";
   import Card from "$lib/ui/Card.svelte";
@@ -9,7 +9,6 @@
   subTitle.text = "POIs Geo Data";
   let map: LeafletMap;
   let map1: LeafletMap;
-
 
   onMount(async () => {
     const pois = await poiService.getPois(loggedInUser.token);
@@ -22,6 +21,7 @@
 
 
 </script>
+
 
 <div id ="home-map-id">
 <Card title="POI Locations">

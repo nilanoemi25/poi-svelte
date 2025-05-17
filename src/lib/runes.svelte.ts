@@ -11,3 +11,5 @@ export const loggedInUser = $state({
 
  export const currentCategories = $state({ categories: [] as Category[] });
  export const currentPOIs = $state({ pois: [] as POI[] });
+
+ 

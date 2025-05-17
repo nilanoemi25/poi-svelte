@@ -6,8 +6,9 @@ export const poiService = {
   baseUrl: "http://localhost:4000",
  //baseUrl: "https://knotty-near-rest.glitch.me", 
 
-  async signup(user: User): Promise<boolean> {
+  async signup(firstName: string, lastName: string, email:string, password:string) {
     try {
+      const user = { firstName, lastName, email, password };
       const response = await axios.post(`${this.baseUrl}/api/users`, user);
       return response.data.success === true;
     } catch (error) {
@@ -152,7 +153,6 @@ export const poiService = {
   //   }
   // },
 
-  //not working 
   async deleteImage(public_id: string) {
     try {
       const response = await axios.post(`${this.baseUrl}/api/deleteImage`, public_id);

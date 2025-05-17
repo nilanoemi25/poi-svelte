@@ -63,16 +63,17 @@
   </Card>
 
   <Card>
-  <div class="field">
-    <label class="label" for="amount">Category List:</label>
-    <div class="select">
-      <select bind:value={selectedCategory}>
-      {#each currentCategories.categories as c}
-          <option value={c._id}>{c.name}</option>
-        {/each} 
-      </select>
-    </div>
-  </div>
+      <div class="field">
+        <label class="label" for="amount">Category List:</label>
+        <div class="select">
+          <select bind:value={selectedCategory}>
+          {#each currentCategories.categories as c}
+              <option value={c._id}>{c.name}</option>
+            {/each} 
+          </select>
+        </div>
+      </div>
+  
 
   <div>
     <div class="field">
