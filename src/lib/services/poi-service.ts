@@ -6,9 +6,9 @@ export const poiService = {
   baseUrl: "http://localhost:4000",
  //baseUrl: "https://knotty-near-rest.glitch.me", 
 
-  async signup(firstName: string, lastName: string, email:string, password:string) {
+  async signup(user: User) {
     try {
-      const user = { firstName, lastName, email, password };
+     // const user = { firstName, lastName, email, password };
       const response = await axios.post(`${this.baseUrl}/api/users`, user);
       return response.data.success === true;
     } catch (error) {
@@ -30,7 +30,7 @@ export const poiService = {
           token: response.data.token,
           _id: response.data._id
         };
-        this.saveSession(session, email);
+      //  this.saveSession(session, email);
         await this.refreshCategoryInfo();
         return session;
       }

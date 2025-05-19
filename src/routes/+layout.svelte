@@ -5,14 +5,31 @@
   import Menu from "$lib/ui/Menu.svelte";
 	import { onMount } from "svelte";
 
-  onMount(async () => {
-    await poiService.restoreSession();
-  });
+//   onMount(async () => {
+//     await poiService.restoreSession();
+//   });
 
-</script>
+export let data: any;
+  if (data.session) {
+    loggedInUser.email = data.session.email;
+    loggedInUser.name = data.session.name;
+    loggedInUser.token = data.session.token;
+    loggedInUser._id = data.session._id;
+  } else {
+    loggedInUser.email = "";
+    loggedInUser.name = "";
+    loggedInUser.token = "";
+    loggedInUser._id = "";
+  }
+
+  console.log(data.session);
+
+ </script>
+
+
 
 <div class="container">
-  {#if loggedInUser.name}
+  {#if loggedInUser.token}
     <Menu />
     <Heading />
   {/if}

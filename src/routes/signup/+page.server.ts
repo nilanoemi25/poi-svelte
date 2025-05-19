@@ -21,6 +21,7 @@ export const actions = {
       throw redirect(307, "/");
     } else {
       console.log(`attempting to sign up email: ${user.email} with password: ${user.password}`);
+      console.log(user); 
       const success = await poiService.signup(user);
       if (success) {
         throw redirect(303, "/");

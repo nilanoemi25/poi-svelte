@@ -10,26 +10,34 @@
   let message = $state("");
 
 
-  async function login() {
-    console.log(`attempting to log in email: ${email} with password: ${password}`);
-    let session = await poiService.login(email, password);
-    if (session) {
-      goto("/category");
-    } else {
-      email = "";
-      password = "";
-      message = "Invalid Credentials";
-    }
-  }
+  // async function login() {
+  //   console.log(`attempting to log in email: ${email} with password: ${password}`);
+  //   let session = await poiService.login(email, password);
+  //   if (session) {
+  //     goto("/category");
+  //   } else {
+  //     email = "";
+  //     password = "";
+  //     message = "Invalid Credentials";
+  //   }
+  // }
 
 
 </script>
 
-{#if message}
+<!-- {#if message}
   <Message {message} />
 {/if}
 
 <form on:submit|preventDefault={login}>
   <UserCredentials bind:email bind:password />
+  <button class="button is-success is-fullwidth">Log In</button>
+</form> -->
+
+{#if message}
+  <Message {message} />
+{/if}
+<form method="POST" action="?/login">
+  <UserCredentials />
   <button class="button is-success is-fullwidth">Log In</button>
 </form>
