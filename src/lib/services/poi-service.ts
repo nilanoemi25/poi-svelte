@@ -1,37 +1,31 @@
-import axios from "axios";
-import type { Session, User, Category, POI } from "$lib/types/poi-types";
-import { currentCategories, currentPOIs, loggedInUser } from "$lib/runes.svelte";
+import type { Session, User } from "$lib/types/poi-types";
+import type { Category, POI } from "$lib/types/poi-types";
+import { userStore } from "$lib/models/mongo/user-store";
+import { poiMongoStore} from "$lib/models/mongo/poi-store";
+import { categoryMongoStore} from "$lib/models/mongo/category-store";
+
 
 export const poiService = {
-  baseUrl: "http://localhost:4000",
- //baseUrl: "https://knotty-near-rest.glitch.me", 
-
-  async signup(user: User) {
+  async signup(user: User): Promise<boolean> {
     try {
-     // const user = { firstName, lastName, email, password };
-      const response = await axios.post(`${this.baseUrl}/api/users`, user);
-      return response.data.success === true;
+      const newUser = await userStore.add(user);
+      return !!newUser;
     } catch (error) {
       console.log(error);
       return false;
     }
   },
-  
+
   async login(email: string, password: string): Promise<Session | null> {
     try {
-      const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
-        email,
-        password
-      });
-      if (response.data.success) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-        const session: Session = {
-          name: response.data.name,
-          token: response.data.token,
-          _id: response.data._id
+      const user = await userStore.findBy(email);
+      if (user !== null && user.password === password) {
+        const session = {
+          name: `${user.firstName} ${user.lastName}`,
+          token: user._id!.toString(),
+          _id: user._id!.toString(),
+          email: user.email
         };
-      //  this.saveSession(session, email);
-        await this.refreshCategoryInfo();
         return session;
       }
       return null;
@@ -40,87 +34,23 @@ export const poiService = {
       return null;
     }
   },
-  
-  async getCategories(token: string): Promise<Category[]> {
+
+    async createPoi(poi: POI, category:Category ) {
     try {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const response = await axios.get(this.baseUrl + "/api/categories");
-      return response.data;
+      const newPOI = await poiMongoStore.addPoi(poi, category);
+      return JSON.parse(JSON.stringify(newPOI));
+    //  await this.refreshCategoryInfo();
+    //  return response.status == 200;
     } catch (error) {
-    console.log(error);
-      return [];
+      console.log(error);
+      return false;
     }
   },
 
 
-
-  async refreshCategoryInfo() {
-    if (loggedInUser.token) {
-    currentCategories.categories = await this.getCategories(loggedInUser.token);
-    currentPOIs.pois = await this.getPois(loggedInUser.token);
-    }
-  },
-
-    saveSession(session: Session, email: string) {
-    loggedInUser.email = email;
-    loggedInUser.name = session.name;
-    loggedInUser.token = session.token;
-    loggedInUser._id = session._id;
-    localStorage.donation = JSON.stringify(loggedInUser);
-  },
-
-
-  async restoreSession() {
-    const savedLoggedInUser = localStorage.donation;
-    if (savedLoggedInUser) {
-      const session = JSON.parse(savedLoggedInUser);
-      loggedInUser.email = session.email;
-      loggedInUser.name = session.name;
-      loggedInUser.token = session.token;
-      loggedInUser._id = session._id;
-    }
-    await this.refreshCategoryInfo();
-  },
-
-  clearSession() {
-    currentCategories.categories = [];
-    currentPOIs.pois = [];
-    loggedInUser.email = "";
-    loggedInUser.name = "";
-    loggedInUser.token = "";
-    loggedInUser._id = "";
-    localStorage.removeItem("donation");
-  },
-
-  //gets all POIs
-  async getPois(token: string): Promise<POI[]> {
+    async createCategory(category:Category) {
     try {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const response = await axios.get(this.baseUrl + "/api/pois");
-      return response.data;
-    } catch (error) {
-    console.log(error)
-      return [];
-    }
-  },
-
-  async getPoisById(token: string): Promise<POI[]> {
-    try {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const response = await axios.get(this.baseUrl + "/api/pois/{id}");
-      return response.data;
-    } catch (error) {
-    console.log(error)
-      return [];
-    }
-  },
-
-
-  async createCategory(category:Category,token: string) {
-    try {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const response = await axios.post(this.baseUrl + "/api/categories", category);
-      await this.refreshCategoryInfo();
+      const response = await categoryMongoStore.addCategory(category); 
       return response.data;
     } catch (error) {
     console.log(error);
@@ -128,42 +58,23 @@ export const poiService = {
     }
   },
 
-  async createPoi(poi: POI, category:Category, token: string) {
+  async getCategories(): Promise<Category[]> {
     try {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      const response = await axios.post(this.baseUrl + "/api/categories/" + category._id + "/pois", poi);
-      await this.refreshCategoryInfo();
-    //  return response.status == 200;
-    return response.data;
+      const candidates = await categoryMongoStore.getAllCategories();
+      return JSON.parse(JSON.stringify(candidates));
     } catch (error) {
-      console.log(error);
-      return false;
+      return [];
+    }
+  },
+
+  async getPois(): Promise<POI[]> {
+    try {
+      const candidates = await poiMongoStore.getAllPois();
+      return JSON.parse(JSON.stringify(candidates));
+    } catch (error) {
+      return [];
     }
   },
 
 
-  //    async getCategoriesById(poi: POI, token: string) {
-  //   try {
-  //     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-  //     const response = await axios.get(this.baseUrl + "/categories/" + poi.categoryid);
-  //     return response.data;
-  //   } catch (error) {
-  //   console.log(error)
-  //     return [];
-  //   }
-  // },
-
-  async deleteImage(public_id: string) {
-    try {
-      const response = await axios.post(`${this.baseUrl}/api/deleteImage`, public_id);
-      return response.data.success === true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  },
-
-
-
-
-};
+}

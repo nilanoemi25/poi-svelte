@@ -5,9 +5,9 @@
   import UserCredentials from "$lib/ui/UserCredentials.svelte";
 
 
-  let email = $state("");
-  let password = $state("");
-  let message = $state("");
+  // let email = $state("");
+  // let password = $state("");
+   let message = $state("");
 
 
   // async function login() {

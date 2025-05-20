@@ -12,9 +12,9 @@
         const category: Category = {
          name: categoryname,
         };
-        const success = await poiService.createCategory(category, loggedInUser.token);
+        const success = await poiService.createCategory(category);
         if (!success) {
-          message = "POI not added - some error occurred";
+          message = "Category not added - some error occurred";
           return;
         }
         else {

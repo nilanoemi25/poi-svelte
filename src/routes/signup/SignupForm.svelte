@@ -30,7 +30,7 @@
     }
   </script>
   
- <div class="box">
+ <!-- <div class="box">
   <form>
     {#if message}
       <Message {message} />
@@ -38,6 +38,20 @@
     <UserDetails bind:firstName bind:lastName />
     <UserCredentials bind:email bind:password />
     <button onclick={() => signup()}  class="button" type="submit">Sign Up</button>
+    <p class="has-text-centered">
+      Already have an account? <a href="/login" data-cy="login-redirect">Login Here</a>
+    </p>
+  </form>
+</div> -->
+
+<div class="box">
+  <form method="POST" action="?/signup">
+    {#if message}
+      <Message {message} />
+    {/if}
+    <UserDetails bind:firstName bind:lastName />
+    <UserCredentials bind:email bind:password />
+    <button class="button">Sign Up</button>
     <p class="has-text-centered">
       Already have an account? <a href="/login" data-cy="login-redirect">Login Here</a>
     </p>

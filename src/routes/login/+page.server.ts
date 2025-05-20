@@ -2,6 +2,7 @@ import { dev } from "$app/environment";
 import { poiService } from "$lib/services/poi-service";
 import { redirect } from "@sveltejs/kit";
 
+
 export const actions = {
   login: async ({ request, cookies }) => {
     const form = await request.formData();
