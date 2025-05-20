@@ -10,14 +10,14 @@
 
   subTitle.text = "POIs to date";
 
-  // let pois: POI[] = [];
-  // onMount(async () => {
-  //  pois = await poiService.getPois(loggedInUser.token);
-  // });
+  let pois: POI[] = [];
+  onMount(async () => {
+   pois = await poiService.getPois(loggedInUser.token);
+  });
 
 
-  let { data }: PageProps = $props();
-  refreshPoiState(data.pois, data.categories);
+  // let { data }: PageProps = $props();
+  // refreshPoiState(data.pois, data.categories);
 </script>
 
 

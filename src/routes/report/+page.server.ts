@@ -1,6 +1,8 @@
 import { poiService } from "$lib/services/poi-service";
 import type { PageServerLoad } from "./$types";
 
+export const ssr = false; 
+
 export const load: PageServerLoad = async ({ parent }) => {
   const { session } = await parent();
   if (session) {

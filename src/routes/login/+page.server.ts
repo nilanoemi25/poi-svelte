@@ -2,6 +2,8 @@ import { dev } from "$app/environment";
 import { poiService } from "$lib/services/poi-service";
 import { redirect } from "@sveltejs/kit";
 
+export const ssr = false; 
+
 
 export const actions = {
   login: async ({ request, cookies }) => {
