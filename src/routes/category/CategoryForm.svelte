@@ -4,7 +4,6 @@
 	import type { Category } from "$lib/types/poi-types";
   import DOMPurify from 'dompurify';
 
-    let { categoryList = [] } = $props();
     let message = $state("");
     let categoryname = $state("");
    
@@ -30,7 +29,7 @@
   <div class="field">
     <label class="label" for="amount"> Existing Category List:</label>
       <ul>
-          {#each categoryList as category}
+          {#each currentCategories.categories as category}
           <li><a href="/poi"> {category.name}</a></li>
           {/each}
       </ul>

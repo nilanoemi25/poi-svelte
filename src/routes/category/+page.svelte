@@ -9,7 +9,7 @@
   
     subTitle.text = "Add a Category";
     let categoryList: Category[] = [];
-    console.log(categoryList)
+    //console.log(categoryList)
     // Issue with categories API per user hence getting all categories from db
 
 
