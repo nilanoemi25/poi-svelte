@@ -1,3 +1,4 @@
+import type { MarkerSpec } from "./services/markers";
 import type { Category, POI } from "./types/poi-types";
 
 
@@ -38,4 +39,6 @@ export const loggedInUser = $state({
         }
       ]
     }
- })
+ }); 
+
+ export const markerSelected = $state({ value: null as MarkerSpec | null });

@@ -1,5 +1,40 @@
 import { currentCategories, currentPOIs, loggedInUser, currentDataSets } from "$lib/runes.svelte";
 import type { POI, Category } from "$lib/types/poi-types";
+import type { MarkerLayer, MarkerSpec } from "./markers";
+
+export function generateMarkerSpec(poi: POI): MarkerSpec {
+  return <MarkerSpec>{
+    id: poi.categoryid,
+    title: poi.name,
+    location: {
+      lat: poi.latitude,
+      lng: poi.longitude
+    }
+  };
+}
+
+export function generateMarkerSpecs(poi: Array<POI>): MarkerSpec[] {
+  const markerSpecs = Array<MarkerSpec>();
+ poi.forEach((p) => {
+    markerSpecs.push(p.markerSpec);
+  });
+  return markerSpecs;
+}
+
+export function generateMarkerLayer(category: Category): MarkerLayer {
+  return {
+    title: category.name, 
+    markerSpecs: generateMarkerSpecs(category.pois)
+  };
+}
+
+export function generateMarkerLayers(cats: Category[]): MarkerLayer[] {
+  const markerLayers: Array<MarkerLayer> = [];
+  cats.forEach((cats) => {
+    markerLayers.push(cats.markerLayer);
+  });
+  return markerLayers;
+}
 
 export function latitudeTrendChart (poiList: POI[]) {
   poiList.forEach((poi)=>
@@ -61,6 +96,8 @@ export function clearPoiState() {
   loggedInUser.name = "";
   loggedInUser.token = "";
   loggedInUser._id = "";
+  localStorage.removeItem("donation");
+
 }
 
 
@@ -103,3 +140,4 @@ currentPOIs.pois.forEach((p)=>{
     
   return PoiLongitude; 
 }
+

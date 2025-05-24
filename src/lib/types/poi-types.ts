@@ -1,3 +1,6 @@
+import type { MarkerLayer, MarkerSpec } from "$lib/services/markers";
+
+
 export interface Session {
     name: string;
     _id: string;
@@ -16,6 +19,8 @@ export interface Session {
     name: string;
     _id?: string; 
     user?: User | string; 
+    pois?: Array<POI>,
+    markerLayer?: MarkerLayer;
   }
 
   export interface POI {
@@ -26,6 +31,7 @@ export interface Session {
     categoryid?: Category | string; 
     v?: string; 
     img?: string; 
+    markerSpec?: MarkerSpec;
   //  user?: User | string; 
  // category: Category | string; 
   }

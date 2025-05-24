@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 import { poiService } from "$lib/services/poi-service";
 import type { User } from "$lib/types/poi-types";
 
-const SECRET_CLIENT_ID = process.env.SECRET_CLIENT_ID; 
-const SECRET_CLIENT_SECRET = process.env.SECRET_CLIENT_SECRET; 
+const SECRET_CLIENT_ID = "p462125578667-bbu4sv837o583b0rs72vujji5gr2d471.apps.googleusercontent.com"
+const SECRET_CLIENT_SECRET = "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"
 
 export const actions = {
   signup: async ({ request }) => {
@@ -34,7 +34,7 @@ export const actions = {
 
 
     OAuth2: async({})=>{
-        const redirectURL = 'http://localhost:5173/oauth';
+        const redirectURL = 'http://localhost:5173/category';
 
        // console.log('id',SECRET_CLIENT_ID)
 
