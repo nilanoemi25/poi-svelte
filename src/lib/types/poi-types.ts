@@ -29,3 +29,8 @@ export interface Session {
   //  user?: User | string; 
  // category: Category | string; 
   }
+
+  export interface DataSet {
+  labels: string[];
+  datasets: [{ values: number[] }];
+}

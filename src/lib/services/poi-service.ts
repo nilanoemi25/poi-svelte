@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Session, User, Category, POI } from "$lib/types/poi-types";
 import { currentCategories, currentPOIs, loggedInUser } from "$lib/runes.svelte";
+import { latitudeTrendChart, poiByCategoriesChart,poiNamesAnalysisChart } from "./poi-utils";
 
 export const poiService = {
   baseUrl: "http://localhost:4000",
@@ -58,6 +59,9 @@ export const poiService = {
     if (loggedInUser.token) {
     currentCategories.categories = await this.getCategories(loggedInUser.token);
     currentPOIs.pois = await this.getPois(loggedInUser.token);
+    latitudeTrendChart(currentPOIs.pois);
+    poiByCategoriesChart(currentPOIs.pois, currentCategories.categories);
+    poiNamesAnalysisChart(currentPOIs.pois);
     }
   },
 
